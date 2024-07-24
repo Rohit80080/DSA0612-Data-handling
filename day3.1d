@@ -1,0 +1,32 @@
+# Load necessary libraries
+library(plot3D)
+
+# Create a data frame
+weather_data <- data.frame(
+  Date = c("2023-01-01", "2023-01-02", "2023-01-03", "2023-01-04", "2023-01-05"),
+  Temperature = c(10, 12, 8, 15, 14),
+  Humidity = c(75, 70, 80, 65, 72),
+  Wind_Speed = c(15, 12, 18, 20, 16)
+)
+
+# Create a grid of values for humidity and wind speed
+humidity <- seq(min(weather_data$Humidity), max(weather_data$Humidity), length.out = 100)
+wind_speed <- seq(min(weather_data$Wind_Speed), max(weather_data$Wind_Speed), length.out = 100)
+grid <- expand.grid(Humidity = humidity, Wind_Speed = wind_speed)
+
+# Predict temperature using a linear model
+model <- lm(Temperature ~ Humidity + Wind_Speed, data = weather_data)
+grid$Temperature <- predict(model, newdata = grid)
+
+# 3D Surface Plot
+scatter3D(grid$Humidity, grid$Wind_Speed, grid$Temperature,
+          main = "Temperature Surface Plot",
+          xlab = "Humidity (%)", ylab = "Wind Speed (km/h)", zlab = "Temperature (°C)",
+          pch = ".",
+          theta = 45,
+          phi = 30,
+          col = "blue",
+          colkey = FALSE)
+
+
+This code will create a 3
