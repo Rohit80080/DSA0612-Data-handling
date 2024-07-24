@@ -1,0 +1,41 @@
+
+
+
+# Load necessary libraries
+library(ggplot2)
+library(plot3D)
+
+# Create a data frame
+weather_data <- data.frame(
+  Date = c("2023-01-01", "2023-01-02", "2023-01-03", "2023-01-04", "2023-01-05"),
+  Temperature = c(10, 12, 8, 15, 14),
+  Humidity = c(75, 70, 80, 65, 72),
+  Wind_Speed = c(15, 12, 18, 20, 16)
+)
+
+# Correlation analysis
+cor_matrix <- round(cor(weather_data[, 2:4]), 2)
+print(cor_matrix)
+
+# 3D Scatter Plot
+scatter3D(weather_data$Temperature, weather_data$Humidity, weather_data$Wind_Speed,
+          main = "Relationship between Temperature, Humidity, and Wind Speed",
+          xlab = "Temperature (°C)", ylab = "Humidity (%)", zlab = "Wind Speed (km/h)")
+
+# Pairwise scatter plots
+ggplot(weather_data, aes(x = Temperature, y = Humidity)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Temperature vs. Humidity", x = "Temperature (°C)", y = "Humidity (%)")
+
+ggplot(weather_data, aes(x = Temperature, y = Wind_Speed)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Temperature vs. Wind Speed", x = "Temperature (°C)", y = "Wind Speed (km/h)")
+
+ggplot(weather_data, aes(x = Humidity, y = Wind_Speed)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Humidity vs. Wind Speed", x = "Humidity (%)", y = "Wind Speed (km/h)")
+
+
