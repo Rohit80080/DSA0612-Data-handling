@@ -1,0 +1,24 @@
+# Load necessary libraries
+library(plot3D)
+
+# Create a data frame
+weather_data <- data.frame(
+  Date = c("2023-01-01", "2023-01-02", "2023-01-03", "2023-01-04", "2023-01-05"),
+  Temperature = c(10, 12, 8, 15, 14),
+  Humidity = c(75, 70, 80, 65, 72),
+  Wind_Speed = c(15, 12, 18, 20, 16)
+)
+
+# 3D Scatter Plot
+scatter3D(weather_data$Humidity, weather_data$Wind_Speed, weather_data$Temperature,
+          main = "Relationship between Wind Speed, Humidity, and Temperature",
+          xlab = "Humidity (%)", ylab = "Wind Speed (km/h)", zlab = "Temperature (°C)")
+
+# 3D Surface Plot
+temp <- seq(min(weather_data$Temperature), max(weather_data$Temperature), length.out = 100)
+hum <- seq(min(weather_data$Humidity), max(weather_data$Humidity), length.out = 100)
+grid <- expand.grid(Temperature = temp, Humidity = hum)
+grid$Wind_Speed <- with(grid, 15 + 0.1*Temperature - 0.2*Humidity + rnorm(nrow(grid), sd = 2))
+scatter3D(grid$Humidity, grid$Wind_Speed, grid$Temperature, pch = ".",
+          main = "Surface Plot of Wind Speed vs. Humidity (Temperature as third dimension)",
+          xlab = "Humidity (%)", ylab = "Wind Speed (km/h)", zlab = "Temperature (°C)")
