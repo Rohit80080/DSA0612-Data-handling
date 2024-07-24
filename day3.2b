@@ -1,0 +1,22 @@
+# Load necessary libraries
+library(plot3D)
+
+# Create a data frame
+financial_data <- data.frame(
+  Date = c("2023-01-01", "2023-01-02", "2023-01-03", "2023-01-04", "2023-01-05"),
+  Stock_Price = c(100, 102, 98, 105, 108),
+  Volume_Traded = c(2.5, 3.0, 2.2, 2.8, 3.5),
+  Market_Cap = c(500, 510, 490, 525, 540)
+)
+
+# 3D Scatter Plot
+scatter3D(financial_data$Volume_Traded, financial_data$Market_Cap, financial_data$Stock_Price,
+          main = "Relationship between Volume Traded, Market Cap, and Stock Price",
+          xlab = "Volume Traded (millions)", ylab = "Market Capitalization ($)", zlab = "Stock Price ($)",
+          pch = 19, col = "blue", theta = 45, phi = 30, colkey = FALSE)
+
+# Rotate the plot to explore different angles
+scatter3D(financial_data$Volume_Traded, financial_data$Market_Cap, financial_data$Stock_Price,
+          main = "Relationship between Volume Traded, Market Cap, and Stock Price",
+          xlab = "Volume Traded (millions)", ylab = "Market Capitalization ($)", zlab = "Stock Price ($)",
+          pch = 19, col = "blue", theta = 60, phi = 20, colkey = FALSE)
