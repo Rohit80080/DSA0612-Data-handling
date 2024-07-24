@@ -1,0 +1,52 @@
+
+  
+  
+  # Load necessary libraries
+  library(plot3D)
+
+# Create a data frame
+weather_data <- data.frame(
+  Date = c("2023-01-01", "2023-01-02", "2023-01-03", "2023-01-04", "2023-01-05"),
+  Temperature = c(10, 12, 8, 15, 14),
+  Humidity = c(75, 70, 80, 65, 72),
+  Wind_Speed = c(15, 12, 18, 20, 16)
+)
+
+# Create a grid of values for humidity and wind speed
+humidity <- seq(min(weather_data$Humidity), max(weather_data$Humidity), length.out = 100)
+wind_speed <- seq(min(weather_data$Wind_Speed), max(weather_data$Wind_Speed), length.out = 100)
+
+# Predict temperature using linear models
+model_humidity <- lm(Temperature ~ Humidity, data = weather_data)
+model_wind_speed <- lm(Temperature ~ Wind_Speed, data = weather_data)
+
+# Create grids for prediction
+grid_humidity <- data.frame(Humidity = humidity)
+grid_wind_speed <- data.frame(Wind_Speed = wind_speed)
+
+# Predict temperature
+grid_humidity$Temperature <- predict(model_humidity, newdata = grid_humidity)
+grid_wind_speed$Temperature <- predict(model_wind_speed, newdata = grid_wind_speed)
+
+# 3D Surface Plots
+par(mfrow = c(1, 2))
+
+scatter3D(grid_humidity$Humidity, rep(0, length(grid_humidity$Humidity)), grid_humidity$Temperature,
+          main = "Temperature vs. Humidity",
+          xlab = "Humidity (%)", ylab = "", zlab = "Temperature (°C)",
+          pch = ".",
+          theta = 45,
+          phi = 30,
+          col = "blue",
+          colkey = FALSE)
+
+scatter3D(rep(0, length(grid_wind_speed$Wind_Speed)), grid_wind_speed$Wind_Speed, grid_wind_speed$Temperature,
+          main = "Temperature vs. Wind Speed",
+          xlab = "", ylab = "Wind Speed (km/h)", zlab = "Temperature (°C)",
+          pch = ".",
+          theta = 45,
+          phi = 30,
+          col = "red",
+          colkey = FALSE)
+
+
